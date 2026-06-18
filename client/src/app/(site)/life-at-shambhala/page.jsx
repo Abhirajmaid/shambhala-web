@@ -1,0 +1,2 @@
+import { SectionHeader } from '@/components/sections/ContentSections';
+export default function LifeAtShambhalaPage() { return <main className="container-page py-16"><SectionHeader eyebrow="Culture" title="Life at Shambhala" description="Culture galleries, values and employee stories are CMS-ready for the next content pass." /><div className="grid gap-4 md:grid-cols-3">{['Design-led', 'Collaborative', 'Customer-first'].map((item) => <div key={item} className="rounded-2xl bg-white p-8 text-2xl font-semibold shadow-sm">{item}</div>)}</div></main>; }

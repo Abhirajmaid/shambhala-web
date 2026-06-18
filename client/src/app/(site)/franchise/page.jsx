@@ -1,0 +1,3 @@
+import { FranchiseForm } from '@/components/forms/FranchiseForm';
+import { SectionHeader } from '@/components/sections/ContentSections';
+export default function FranchisePage() { return <main className="container-page grid gap-10 py-16 lg:grid-cols-2"><div><SectionHeader eyebrow="Franchise" title="Grow with Shambhala" description="Proven success, comprehensive support and stronger together operations for showroom partners." /><div className="grid gap-4">{['Proven Success','Comprehensive Support','Stronger Together'].map((item) => <div key={item} className="rounded-2xl bg-white p-6 shadow-sm"><h3 className="text-xl font-semibold">{item}</h3></div>)}</div></div><div className="rounded-2xl bg-white p-6 shadow-sm"><FranchiseForm source="franchise-page" /></div></main>; }
