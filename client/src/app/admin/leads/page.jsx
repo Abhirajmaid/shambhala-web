@@ -6,7 +6,7 @@ import { DataTable } from '@/components/admin/DataTable';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
-import { db } from '@/lib/firebase/client';
+import { db } from '@/lib/firebase';
 
 function exportCsv(leads) {
   const header = ['type','status','fullName','phone','email','city','source'];

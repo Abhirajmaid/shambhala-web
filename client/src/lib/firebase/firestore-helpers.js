@@ -14,7 +14,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { db } from './client';
+import { db } from '@/lib/firebase';
 
 export function serializeDoc(snapshot) {
   if (!snapshot.exists()) return null;

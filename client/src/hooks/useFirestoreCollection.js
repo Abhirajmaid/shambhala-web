@@ -2,7 +2,7 @@
 
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { db } from '@/lib/firebase/client';
+import { db } from '@/lib/firebase';
 
 export function useFirestoreCollection(collectionName, orderField = 'order') {
   const [items, setItems] = useState([]);

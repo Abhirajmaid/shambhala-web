@@ -145,4 +145,45 @@
   .container-page {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
+
+  .gallery-marquee-row {
+    scrollbar-width: none;
+  }
+
+  .gallery-marquee-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 1rem;
+    animation: gallery-marquee 30s linear infinite;
+    will-change: transform;
+  }
+
+  .gallery-marquee-reverse {
+    animation-direction: reverse;
+  }
+
+  .gallery-marquee-group:hover .gallery-marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes gallery-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-marquee-track {
+    animation: none;
+    transform: none;
+  }
 }
