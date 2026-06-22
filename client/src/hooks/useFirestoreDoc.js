@@ -2,7 +2,7 @@
 
 import { doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { db } from '@/lib/firebase/client';
+import { db } from '@/lib/firebase';
 
 export function useFirestoreDoc(collectionName, id) {
   const [item, setItem] = useState(null);
