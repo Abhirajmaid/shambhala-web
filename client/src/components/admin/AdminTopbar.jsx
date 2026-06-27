@@ -9,7 +9,7 @@ export function AdminTopbar({ title, eyebrow, description, action }) {
         {description && <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{description}</p>}
       </div>
       <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
-        <Image src="/logoo.png" alt="Shambhala Home" width={210} height={70} className="h-auto w-40 rounded-lg object-contain" />
+        <Image src="/logoo-removebg.png" alt="Shambhala Home" width={884} height={244} className="h-auto w-40 object-contain" />
         {action}
       </div>
     </div>

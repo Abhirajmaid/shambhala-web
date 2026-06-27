@@ -35,7 +35,7 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-[#f4f5f2] p-4">
       <Card className="w-full max-w-md border-slate-200 shadow-sm">
         <CardHeader className="justify-items-center text-center">
-          <Image src="/logoo.png" alt="Shambhala Home" width={220} height={70} className="mx-auto h-auto w-48 object-contain" priority />
+          <Image src="/logoo-removebg.png" alt="Shambhala Home" width={884} height={244} className="mx-auto h-auto w-48 object-contain" priority />
           <CardTitle className="mt-4 text-2xl">Sign in to manage your gallery</CardTitle>
           <p className="text-sm text-muted-foreground">Use the admin account created in Firebase Authentication.</p>
         </CardHeader>

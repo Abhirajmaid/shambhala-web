@@ -8,6 +8,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
+  --font-serif: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -157,7 +158,7 @@
   .gallery-marquee-track {
     display: flex;
     width: max-content;
-    gap: 1rem;
+    gap: 0.5rem;
     animation: gallery-marquee 30s linear infinite;
     will-change: transform;
   }
@@ -177,7 +178,7 @@
   }
 
   to {
-    transform: translateX(calc(-50% - 0.5rem));
+    transform: translateX(calc(-50% - 0.25rem));
   }
 }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { createProject, deleteProject as deleteProjectDocument, replaceProjectImages, subscribeToProjects, updateProject as updateProjectDocument } from '@/lib/projects';
+import { createProject, deleteProject as deleteProjectDocument, replaceProjectImages, subscribeToProjects, updateProject as updateProjectDocument, updateProjectOrder as updateProjectOrderDocuments } from '@/lib/projects';
 
 const ProjectStateContext = createContext(null);
 
@@ -25,11 +25,17 @@ export function ProjectStateProvider({ children }) {
     projects,
     loading,
     error,
-    addProject(project) {
-      return createProject({ status: 'Draft', images: [], ...project });
+    async addProject(project) {
+      const projectToCreate = { status: 'Draft', images: [], order: projects.length, ...project };
+      const projectId = await createProject(projectToCreate);
+      await updateProjectOrderDocuments([...projects.map((item) => item.id), projectId]);
+      return projectId;
     },
     updateProject(projectId, updates) {
       return updateProjectDocument(projectId, updates);
+    },
+    updateProjectOrder(projectIds) {
+      return updateProjectOrderDocuments(projectIds);
     },
     addProjectImages(projectId, images) {
       const project = projects.find((item) => item.id === projectId);

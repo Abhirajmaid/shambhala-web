@@ -1,24 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-const highlightImages = [
-  {
-    src: '/image.png',
-    alt: 'Shambhala home exterior and living inspiration',
-    className: '',
-  },
-  {
-    src: '/kitchen.jpeg',
-    alt: 'Shambhala modular kitchen display',
-    className: '',
-  },
-  {
-    src: '/war.jpg',
-    alt: 'Shambhala wardrobe interior with seating nook',
-    className: 'md:col-span-2',
-  },
-];
+const detailCards = ['', '', 'wide'];
 
 export function GalleryHighlight() {
   return (
@@ -42,19 +25,11 @@ export function GalleryHighlight() {
           </Button>
         </div>
         <div className="grid auto-rows-[13rem] gap-4 sm:grid-cols-2 md:auto-rows-[15rem]">
-          {highlightImages.map((image) => (
+          {detailCards.map((card, index) => (
             <div
-              key={image.src}
-              className={`relative overflow-hidden rounded-3xl bg-white/10 shadow-2xl ${image.className}`}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(min-width: 1024px) 32vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
+              key={`${card}-${index}`}
+              className={`rounded-3xl border border-white/10 bg-white/[0.06] shadow-2xl ${card === 'wide' ? 'md:col-span-2' : ''}`}
+            />
           ))}
         </div>
       </div>

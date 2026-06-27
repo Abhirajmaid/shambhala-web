@@ -9,6 +9,7 @@ import {
   setDoc,
   updateDoc,
   where,
+  writeBatch,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
@@ -23,6 +24,8 @@ function normalizeProject(snapshot) {
     tagline: data.tagline || data.description || '',
     status: data.status || 'Draft',
     images: Array.isArray(data.images) ? data.images : [],
+    carouselRows: data.carouselRows === 1 ? 1 : 2,
+    order: Number.isFinite(data.order) ? data.order : null,
     createdAt: data.createdAt || null,
     updatedAt: data.updatedAt || null,
   };
@@ -30,6 +33,9 @@ function normalizeProject(snapshot) {
 
 function sortProjects(projects) {
   return [...projects].sort((a, b) => {
+    if (a.order !== null && b.order !== null && a.order !== b.order) return a.order - b.order;
+    if (a.order !== null && b.order === null) return -1;
+    if (a.order === null && b.order !== null) return 1;
     const aTime = a.createdAt?.toMillis?.() || 0;
     const bTime = b.createdAt?.toMillis?.() || 0;
     if (aTime !== bTime) return bTime - aTime;
@@ -74,6 +80,8 @@ export async function createProject(project) {
     tagline: project.tagline,
     status: project.status || 'Draft',
     images: Array.isArray(project.images) ? project.images : [],
+    carouselRows: project.carouselRows === 1 ? 1 : 2,
+    order: Number.isFinite(project.order) ? project.order : Date.now(),
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   };
@@ -91,6 +99,17 @@ export function updateProject(projectId, updates) {
 
 export function replaceProjectImages(projectId, images) {
   return updateProject(projectId, { images });
+}
+
+export async function updateProjectOrder(projectIds) {
+  const batch = writeBatch(db);
+  projectIds.forEach((projectId, index) => {
+    batch.update(doc(db, PROJECTS_COLLECTION, projectId), {
+      order: index,
+      updatedAt: serverTimestamp(),
+    });
+  });
+  await batch.commit();
 }
 
 export function deleteProject(projectId) {
