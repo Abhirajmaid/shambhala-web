@@ -12,10 +12,10 @@ export function Footer({ settings }) {
           aria-label={settings?.siteName || 'Shambhala Home'}
         >
           <Image
-            src="/logoo-removebg.png"
+            src="/Shambhala-Logo.png"
             alt={settings?.siteName || 'Shambhala Home'}
-            width={884}
-            height={244}
+            width={1024}
+            height={1024}
             className="h-auto w-48 object-contain opacity-90 md:w-60"
           />
         </Link>

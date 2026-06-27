@@ -85,11 +85,6 @@ function SortableProjectCard({ project, onDelete, disabled, rank, galleryRank })
             </div>
           </div>
           <p className="mt-4 line-clamp-2 text-sm leading-6 text-slate-500">{project.tagline || 'No project description added yet.'}</p>
-          <div className="mt-auto pt-5">
-            <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
-              <div className={`h-full rounded-full ${project.status === 'Published' ? 'bg-emerald-500' : 'bg-amber-500'}`} style={{ width: project.status === 'Published' ? '100%' : '45%' }} />
-            </div>
-          </div>
         </div>
       </div>
     </article>

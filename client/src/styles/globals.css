@@ -122,6 +122,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
+  body,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-sans), Arial, sans-serif;
+  }
+  .font-serif {
+    font-family: var(--font-sans), Arial, sans-serif !important;
+  }
   body {
     @apply bg-background text-foreground;
   }

@@ -231,7 +231,7 @@ export function ProjectDetail({ projectId }) {
                   <Button type="button" variant="outline" onClick={cancelEdit}>Cancel</Button>
                 </>
               )}
-              {saved && <p className="text-sm text-[#8a5a32]">Saved to Firestore.</p>}
+              {saved && <p className="text-sm text-[#8a5a32]">Saved.</p>}
               {saveError && <p className="text-sm text-red-700">{saveError}</p>}
             </div>
           </div>

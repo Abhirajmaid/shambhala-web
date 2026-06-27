@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { X } from 'lucide-react';
 
+const FALLBACK_ASPECT_RATIO = 16 / 9;
+
 function GalleryImage({ src, alt, fit = 'cover' }) {
   const fitClass = fit === 'contain' ? 'object-contain' : 'object-cover';
 
@@ -22,6 +24,42 @@ function GalleryImage({ src, alt, fit = 'cover' }) {
   );
 }
 
+function MarqueeImageCard({ src, alt, onOpen }) {
+  const [aspectRatio, setAspectRatio] = useState(FALLBACK_ASPECT_RATIO);
+
+  function updateAspectRatio(width, height) {
+    if (!width || !height) return;
+    setAspectRatio(width / height);
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      style={{ width: `calc(var(--gallery-card-height) * ${aspectRatio})` }}
+      className="group relative h-[var(--gallery-card-height)] shrink-0 overflow-hidden rounded-xl bg-muted shadow-sm transition duration-500 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8a5a32]/70 md:rounded-2xl"
+    >
+      {src.startsWith('blob:') ? (
+        <img
+          src={src}
+          alt={alt}
+          className="h-full w-full object-contain"
+          onLoad={(event) => updateAspectRatio(event.currentTarget.naturalWidth, event.currentTarget.naturalHeight)}
+        />
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(min-width: 768px) 40rem, 90vw"
+          className="object-contain"
+          onLoadingComplete={(image) => updateAspectRatio(image.naturalWidth, image.naturalHeight)}
+        />
+      )}
+    </button>
+  );
+}
+
 function MarqueeRow({ project, reverse = false, offset = 0, onOpenImage }) {
   const projectImages = Array.isArray(project.images) ? project.images : [];
   const images = [...projectImages, ...projectImages];
@@ -29,19 +67,17 @@ function MarqueeRow({ project, reverse = false, offset = 0, onOpenImage }) {
   return (
     <div className="gallery-marquee-row overflow-x-auto overflow-y-visible py-1">
       <div className={`gallery-marquee-track ${reverse ? 'gallery-marquee-reverse' : ''}`}>
-        {images.map((src, index) => (
-          <button
-            type="button"
-            key={`${project.id}-${reverse ? 'reverse' : 'forward'}-${index}`}
-            onClick={() => onOpenImage(src, `${project.name} interior ${((index + offset) % projectImages.length) + 1}`)}
-            className="group relative h-56 w-[78vw] max-w-[28rem] shrink-0 overflow-hidden rounded-xl bg-muted shadow-sm transition duration-500 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8a5a32]/70 md:h-72 md:w-[28rem] md:rounded-2xl"
-          >
-            <GalleryImage
+        {images.map((src, index) => {
+          const alt = `${project.name} interior ${((index + offset) % projectImages.length) + 1}`;
+          return (
+            <MarqueeImageCard
+              key={`${project.id}-${reverse ? 'reverse' : 'forward'}-${index}`}
               src={src}
-              alt={`${project.name} interior ${((index + offset) % projectImages.length) + 1}`}
+              alt={alt}
+              onOpen={() => onOpenImage(src, alt)}
             />
-          </button>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -71,8 +107,8 @@ export function ProjectScrollSection({ project, index = 0 }) {
   }
 
   return (
-    <section className="bg-[#fffaf3] py-8 md:py-12">
-      <div className="container-page mb-4 grid gap-3 md:mb-6 md:grid-cols-2 md:items-end">
+    <section className="bg-[#fffaf3] py-6 md:py-9">
+      <div className="container-page mb-3 grid gap-3 md:mb-5 md:grid-cols-2 md:items-end">
         <div className={isReversed ? 'md:order-2 md:text-right' : ''}>
           <ProjectTitle name={project.name} />
         </div>
@@ -81,7 +117,7 @@ export function ProjectScrollSection({ project, index = 0 }) {
         </p>
       </div>
       {imageCount > 0 ? (
-        <div className="gallery-marquee-group space-y-2 md:space-y-3">
+        <div className="gallery-marquee-group space-y-2 [--gallery-card-height:14rem] md:space-y-3 md:[--gallery-card-height:18rem]">
           <MarqueeRow project={project} onOpenImage={openImage} />
           {carouselRows === 2 && (
             <MarqueeRow project={project} reverse offset={Math.ceil(imageCount / 2)} onOpenImage={openImage} />

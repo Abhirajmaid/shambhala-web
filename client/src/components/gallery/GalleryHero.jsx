@@ -13,7 +13,6 @@ export function GalleryHero() {
         sizes="100vw"
         className="object-cover"
       />
-      <div className="absolute inset-x-0 bottom-0 h-[75%] bg-gradient-to-t from-white via-white/75 to-transparent" />
       <div className="container-page relative z-10 flex min-h-[40svh] items-end justify-center pb-8 text-center md:min-h-[58vh] md:pb-16">
         <div className="max-w-4xl">
           <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#8a5a32]">
